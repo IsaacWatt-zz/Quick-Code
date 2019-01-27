@@ -3,9 +3,9 @@ from flask import Flask
 from flask import request as freq
 import requests
 import json
-from common.utils import get_azure_token
-from speach2text import speach2text
-from text2code import text2code
+from src.api.speach2code.common.utils import get_azure_token
+from src.api.speach2code.speach2text import speach2text
+from src.api.speach2code.text2code import text2code
 
 key = 'e8777a6d7a534dd3a3de20dac3f8a2d6'
 
