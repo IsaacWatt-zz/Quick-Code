@@ -7,16 +7,25 @@ import Particles from 'react-particles-js';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { docco } from 'react-syntax-highlighter/dist/styles/hljs';
 import TextField from '@material-ui/core/TextField';
-require([
-  "cm/lib/codemirror", "cm/mode/htmlmixed/htmlmixed"
-], function(CodeMirror) {
-  CodeMirror.fromTextArea(document.getElementById("code"), {
+import $ from "jquery";
+import CodeMirror from "codemirror";
+
+import './text.css';
+
+let whoAmI = 1;
+
+$(document).ready(function() {
+  var code = $(".codemirror-textarea")[0];
+  var editor = CodeMirror.fromTextArea(code, {
     lineNumbers: true,
-    mode: "htmlmixed"
+    mode: "python"
   });
 });
 
-import './text.css'
+const pStyle = {
+  color: 'red',
+  textAlign: 'center'
+};
 
 const styles = theme => ({
   root: {
@@ -26,6 +35,9 @@ const styles = theme => ({
     padding: theme.spacing.unit * 2,
     textAlign: 'center',
     color: theme.palette.text.secondary,
+  },
+  CodeMirrorLinenumber: {
+    color: 'red'
   }
 });
 
@@ -36,7 +48,7 @@ function FullWidthGrid(props) {
     <div className={classes.root}>
       <Grid container spacing={24}>
         <Grid item xs={12} sm={12}>
-          <textarea id="myTextarea" type="text"></textarea>
+          <textarea className="codemirror-textarea"></textarea>
         </Grid>
       </Grid>
     </div>
