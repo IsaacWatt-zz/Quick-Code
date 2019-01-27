@@ -1,7 +1,8 @@
 #!/usr/local/bin/python3
 from flask import Flask
+from flask import request as freq
 import requests
-import http.client, urllib.parse, json
+import json
 from common.utils import get_azure_token
 
 key = 'e8777a6d7a534dd3a3de20dac3f8a2d6'
@@ -14,20 +15,37 @@ def index():
     return 'Speach to Text api! ;-)'
 
 
-@app.route('/speachToText/v1.0/toText', methods=['GET'])
+@app.route('/speachToText/v1.0/toText', methods=['POST'])
 def to_text():
     print('calling microsoft api')
-    # url = '
-    # resp = requests.post(url=url, )
-    # if resp.status_code != 200:
-    #     # This means something went wrong.
-    #     raise ApiError('GET /tasks/ {}'.format(resp.status_code))
-    # for todo_item in resp.json():
-    #     print('{} {}'.format(todo_item['id'], todo_item['summary']))
+
+    # todo: not sure yet! does this work?!
+    print('data input:', freq.data)
+    data = freq.data
 
     token = get_azure_token(key)
     print(token)
-    return 'Calling microsoft Speach to Text api'
+
+    url = 'https://westus2.stt.speech.microsoft.com/speech/recognition/conversation/cognitiveservices/v1'
+    headers = {
+        # "Ocp-Apim-Subscription-Key": key,
+        'Authorization': 'Bearer {}'.format(token.decode('ascii')),
+        'Content-type': 'audio/wav; codecs=audio/pcm; samplerate=16000',
+        'Accept': 'application/json',
+
+        }
+    params = {
+        'language': 'en-CA',
+    }
+
+    print('headers', headers)
+    response = requests.post(url, data=data, headers=headers, params=params)
+    print('response:', response.status_code)
+    if response.status_code == 200:
+        print(response.text)
+        return response.text
+    else:
+        return 'Error:{}, {}, {}'.format(response.status_code, response.text, response.content)
 
 
 if __name__ == '__main__':
