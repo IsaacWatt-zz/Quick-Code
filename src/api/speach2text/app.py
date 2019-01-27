@@ -20,7 +20,7 @@ def to_text():
     print('calling microsoft api')
 
     # todo: not sure yet! does this work?!
-    print('data input:', freq.data)
+    # print('data input:', freq.data)
     data = freq.data
 
     token = get_azure_token(key)
@@ -38,12 +38,13 @@ def to_text():
         'language': 'en-CA',
     }
 
-    print('headers', headers)
+    # print('headers', headers)
     response = requests.post(url, data=data, headers=headers, params=params)
-    print('response:', response.status_code)
+    # print('response:', response.status_code)
     if response.status_code == 200:
         print(response.text)
-        return response.text
+        response_text = json.loads(response.text)
+        return response_text['DisplayText']
     else:
         return 'Error:{}, {}, {}'.format(response.status_code, response.text, response.content)
 
