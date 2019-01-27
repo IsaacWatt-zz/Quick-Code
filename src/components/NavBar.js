@@ -7,6 +7,12 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 
+
+import ReactDOM from 'react-dom';
+import App from '../App';
+import App2 from '../App2';
+import { Router, Route, IndexRoute } from 'react-router';
+
   const styles = {
     root: {
       flexGrow: 1,
@@ -29,14 +35,23 @@ import IconButton from '@material-ui/core/IconButton';
 
   function NavBar(props) {
     const { classes } = props;
+
+    function isLoggedIn() {
+      isLoggedIn = true;
+      ReactDOM.render(<App2 />, document.getElementById('root2'));
+      document.getElementById('root').remove();
+      document.getElementById('speakBtn').remove();
+      //document.querySelector('.runkit-notebook-container').style.visibility = "visible";
+    }
+
     return (
       <div className={classes.root}>
         <AppBar className={classes.app} position="static">
           <Toolbar>
             <Typography variant="h6" color="inherit" className={classes.grow}>
-              Quick Code
+              Quick &lt; &frasl; &gt; Code
             </Typography>
-            <Button color="inherit">Speak Code</Button>
+            <Button id="speakBtn" onClick={isLoggedIn} color="inherit">Speak Code</Button>
           </Toolbar>
         </AppBar>
       </div>
