@@ -31,7 +31,7 @@ function CenteredGrid(props) {
     <div className={classes.root}>
       <Grid container spacing={24}>
         <Grid item sm={12} md={6} className="myGrid">
-          <Paper className={classes.paper}><b>Vision</b> <br/>
+          <Paper className={classes.paper}><b>VISION</b> <br/>
             Quick Code is the ultimate abstraction .. lol. We are using <b>Microsoft Azure</b> and dsds
             to break the barrier of syntax. Quick code is the perfect solution for beginner programmers.
           </Paper>
@@ -44,7 +44,7 @@ function CenteredGrid(props) {
       </Grid>
       <Grid container spacing={24}>
         <Grid item sm={12} md={6} className="myGrid">
-          <Paper className={classes.paper}><b>Impact</b> <br/>
+          <Paper className={classes.paper}><header><b>IMPACT</b></header> <br/>
           My name is Isaac, and I like to party (hotrod is one of my favorite movies).
           Quick Code is something that I have pictured for a while now. nwHacks is extremely lucky
           to be the first to see this. I am so proud that this beta software works at all, and truly belive in its potential.
@@ -58,8 +58,11 @@ function CenteredGrid(props) {
       </Grid>
       <Grid container spacing={24}>
         <Grid item sm={12} md={6} className="myGrid">
-          <Paper className={classes.paper}><b>Something</b> <br/>
-            my name is Isaac.
+          <Paper className={classes.paper}><header><b>ETHIC</b></header><br/>
+             My name is Amir, and I am an ML fanatic! When I'm not creating the next
+          terminator I find myself relaxing by my bedside using Quick Code to run 
+          through my thoughts of the day. Quick Code is an amazing platform to utilize
+          anywhere in any project. It is so convinent that I can code on the go!
           </Paper>
         </Grid>
         <Grid item sm={12} md={6}>
@@ -69,7 +72,10 @@ function CenteredGrid(props) {
       <Grid container spacing={24}>
         <Grid item sm={12} md={6} className="myGrid">
           <Paper className={classes.paper}><b>Something</b> <br/>
-    here
+          My name is Amir, and I am an ML fanatic! When I'm not creating the next
+          terminator I find myself relaxing by my bedside using Quick Code to run 
+          through my thoughts of the day. Quick Code is an amazing platform to utilize
+          anywhere in any project. It is so convinent that I can code on the go!
           </Paper>
         </Grid>
         <Grid item sm={12} md={6}>
@@ -78,7 +84,7 @@ function CenteredGrid(props) {
       </Grid>
       <Grid container spacing={24}>
         <Grid item sm={12} md={6} className="myGrid">
-          <Paper className={classes.paper}><b>YUH</b> <br/>
+          <Paper className={classes.paper}><header><b>INSPIRE</b></header> <br/>
             My name is Kris, and I am always <b> G R I N D I N G </b> insane side projects (like making the most efficient fizz buzz known to man).
 	    Sometimes, after a long gym session or sheer fatigue, a grinder cannot find the will to type another line of code. Quick Code is the
 	    solution to the grinder blues. Coding can be exhausting, but with Quick Code you don't ever need to grease up your keyboard ever again!
