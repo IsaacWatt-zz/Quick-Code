@@ -16,10 +16,11 @@ var headers = {
     'Access-Control-Allow-Headers': 'Content-Type',
 }
 
-var data = 'dsads';
+let data = '';
+// Get data back here 
 
 axios.post("https://cognitivecodeapp.azurewebsites.net/speachToText/v1.0/toCode",
-  data,
+  data, // this data param must be from the Code state (the blob or whatever)
   {headers: headers})
     .then((response) => {
         console.log(response);

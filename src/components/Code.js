@@ -2,6 +2,7 @@ import React from "react";
 import Button from "@material-ui/core/Button";
 import { ReactMic, saveRecording } from "react-mic";
 
+
 export default class Example extends React.Component {
   constructor(props) {
     super(props);
@@ -33,6 +34,15 @@ export default class Example extends React.Component {
     this.setState({
       blobURL: blobObject.blobURL
     });
+   // send the data here !!!!
+
+
+
+    //console.log('here', blobObject);
+
+    // var myBlob = new Blob();
+    // var myFile = blobToFile(myBlob, blobObject.blobURL);
+    console.log('here2', blobObject.type);
   };
 
   onRecordStart = () => {
