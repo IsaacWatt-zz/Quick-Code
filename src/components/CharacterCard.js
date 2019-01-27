@@ -45,7 +45,7 @@ function CenteredGrid(props) {
       <Grid container spacing={24}>
         <Grid item sm={12} md={6} className="myGrid">
           <Paper className={classes.paper}><b>Impact</b> <br/>
-          my name is Isaac, and I like to party (hotrod is one of my favorite movies).
+          My name is Isaac, and I like to party (hotrod is one of my favorite movies).
           Quick Code is something that I have pictured for a while now. nwHacks is extremely lucky
           to be the first to see this. I am so proud that this beta software works at all, and truly belive in its potential.
           Learning to code is frustrating, and I think talking through your code is not only a great way to learn how code looks, but
@@ -78,8 +78,12 @@ function CenteredGrid(props) {
       </Grid>
       <Grid container spacing={24}>
         <Grid item sm={12} md={6} className="myGrid">
-          <Paper className={classes.paper}><b>Something</b> <br/>
-            my name is Isaac.
+          <Paper className={classes.paper}><b>YUH</b> <br/>
+            My name is Kris, and I am always <b> G R I N D I N G </b> insane side projects (like making the most efficient fizz buzz known to man).
+	    Sometimes, after a long gym session or sheer fatigue, a grinder cannot find the will to type another line of code. Quick Code is the
+	    solution to the grinder blues. Coding can be exhausting, but with Quick Code you don't ever need to grease up your keyboard ever again!
+	    
+	    
           </Paper>
         </Grid>
         <Grid item sm={12} md={6}>
