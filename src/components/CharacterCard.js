@@ -7,7 +7,7 @@ import Grid from '@material-ui/core/Grid';
 import isaac from'./isaac.png';
 import amir from'./amir.png';
 import iyad from'./iyad.png';
-import kris from'./kris.png';
+import kris from'./kris.jpg';
 import logo from'./logo.png';
 
 
