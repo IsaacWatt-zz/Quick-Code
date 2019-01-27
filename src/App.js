@@ -9,7 +9,8 @@ class App extends Component {
         <NavBar />
         <CenteredGrid />
       </div>
-    )
+    );
   }
 }
-export default App
+
+export default App;
