@@ -12,9 +12,9 @@ import './components/text.css';
 import audioFile from './audio.wav'
 
 import Recorder from 'recorder-js';
-const audioContext =  new (window.AudioContext || window.webkitAudioContext)();
+import parseIntent from './parseIntent.js';
 
-var iteration = 0;
+const audioContext =  new (window.AudioContext || window.webkitAudioContext)();
 
 const recorder = new Recorder(audioContext, {
   // An array of 255 Numbers
@@ -41,7 +41,6 @@ function stopRecording() {
   recorder.stop()
     .then(({blob, buffer}) => {
       blob = blob;
- 
       // buffer is an AudioBuffer
     });
 }
@@ -58,6 +57,7 @@ var headers = {
     'Access-Control-Allow-Headers': 'Content-Type',
 }
 var data = "";
+var dataAsArray = [];
 
 var mediaDevices; 
 var mediaRecorder; 
@@ -109,6 +109,7 @@ class App2 extends React.Component {
 
   stopRecording = () => {
     var myApp = this;
+    var theIntent = {};
     console.log('mediaRecorder', mediaRecorder.state)
 
     mediaRecorder.onstop = function(e) {
@@ -123,66 +124,33 @@ class App2 extends React.Component {
         headers: { 'content-type': 'multipart/form-data' }
       }
       axios.post('https://cognitivecodeapp.azurewebsites.net/speachToText/v1.0/toCode', {data: theBlob}, config).then((res) => {
-        console.log('res', res)
+        console.log('res', res);
+        theIntent = res;
       }).catch((error) => {
         console.log('error');
       })
     }
 
     mediaRecorder.stop();
-    console.log('mediaRecorder after stop', mediaRecorder.state)
-    
-    console.log('here', mediaRecorder.stream.getAudioTracks()[0]);
-    console.log('stream', mediaRecorder.stream);
     
     this.setState({
       record: false,
       isRecording: false
     });
 
-    if (iteration == 0) {
-      data += "/** \n Definition: \n return @param {type}: \n list of consumed @params: \n **/ \n";
-      myApp.forceUpdate();
-      ++iteration;
-    } else if (iteration == 1) {
-      data += "function f() {\n\n\n}";
-      myApp.forceUpdate();
-      ++iteration;
-    } else if (iteration == 2) {
-      data = "/** \n Definition: \n return @param {type}: \n list of consumed @params: \n **/ \nfunction f() {\n console.log('hello'); \n}";
-      myApp.forceUpdate();
-      ++iteration;
-    } else if (iteration == 3) {
-      data = "/** \n Definition: \n return @param {type}: \n list of consumed @params: \n **/ \nfunction f() {\n console.log('hello');\n return 3; \n}";
-      myApp.forceUpdate();
-      ++iteration;
-    }
-    else if (iteration == 4) {
-      data = "/** \n Definition: \n return @param {type}: \n list of consumed @params: \n **/ \nfunction f() {\n console.log('hello');\n return 3; \n}\nf();";
-      myApp.forceUpdate();
-      ++iteration;
-    } else if (iteration == 5){
-      data = "";
-      myApp.forceUpdate();
-      ++iteration;
-    } else if (iteration == 6) {
-      data = "// my playground \n";
-      myApp.forceUpdate();
-      ++iteration;
-    } else if (iteration == 7) {
-      data = "// my playground \nfor (let i = 0; i < 5; ++i) {\n}\n";
-      myApp.forceUpdate();
-      ++iteration;
-    } else if (iteration == 8) {
-      data = "// my playground \nfor (let i = 0; i < 5; ++i) {\n console.log(i); \n}\n";
-      myApp.forceUpdate();
-      ++iteration;
-    }
+    dataAsArray = parseIntent(theIntent, dataAsArray);
+    data = this.dataAsString(dataAsArray);
   };
-
 
   onSave = blobObject => {};
 
+  dataAsString(dataAsArray) {
+    var str = "";
+    dataAsArray.forEach(element => {
+      str += element + "\n";
+    }); 
+    return str;
+  }
   
   render() {
     return (
