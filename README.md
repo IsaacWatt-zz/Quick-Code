@@ -1,5 +1,3 @@
-# nwHacks2019
-
 # Quick Code
 Quick Code is a web IDE created at **nwHacks2019** that converts spoken pseudo commands into JavaScript. 
 The project was built in under 24 hours using **Node**, **React**, and **Python**. During the hackathon, the project was hosted through **Microsoft Azure** with credits provided by **Microsoft**. Our model and intents were trained using 
