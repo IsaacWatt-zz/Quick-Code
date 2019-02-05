@@ -10,7 +10,6 @@ import iyad from'./iyad.png';
 import kris from'./kris.jpg';
 import logo from'./logo.png';
 
-
 import './text.css'
 
 const styles = theme => ({
@@ -56,7 +55,7 @@ function CenteredGrid(props) {
       <Grid container spacing={24}>
         <Grid item sm={12} md={6} className="myGrid">
           <Paper className={classes.paper}><b>CHANGE</b> <br /> <br />
-          my name is Isaac, and I like to party.
+          my name is Isaac
           Quick Code is an idea that I have had for a while now, and to be honest thought was completely impossible. 
           I am stoked to be able to have a beta version of this product to be able to show off! From here, the goal is to 
           add full support for JavaScript, and in the future add additional support for more languages. Currently we are also
@@ -69,11 +68,11 @@ function CenteredGrid(props) {
       </Grid>
       <Grid container spacing={24}>
         <Grid item sm={12} md={6} className="myGrid">
-          <Paper className={classes.paper}><b>IMPACT</b> <br/> <br/> 
-          My name is Amir, and I am making an impact! When I'm not using ML to create the next
+          <Paper className={classes.paper}><header><b>ETHIC</b></header><br/>
+             My name is Amir, and I am an ML fanatic! When I'm not creating the next
           terminator I find myself relaxing by my bedside using Quick Code to run 
           through my thoughts of the day. Quick Code is an amazing platform to utilize
-          anywhere in any project. It is so convinent that I can code on the go! <br /> <br />
+          anywhere in any project. It is so convinent that I can code on the go!
           </Paper>
         </Grid>
         <Grid item sm={12} md={6}>
