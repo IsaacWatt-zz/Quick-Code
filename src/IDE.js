@@ -27,16 +27,16 @@ const recorder = new Recorder(audioContext, {
 
 let isRecording = false;
 let blob = null;
- 
+
 navigator.mediaDevices.getUserMedia({audio: true})
   .then(stream => recorder.init(stream))
   .catch(err => console.log('Uh oh... unable to get stream...', err));
- 
+
 function startRecording() {
   recorder.start()
     .then(() => isRecording = true);
 }
- 
+
 function stopRecording() {
   recorder.stop()
     .then(({blob, buffer}) => {
@@ -44,7 +44,7 @@ function stopRecording() {
       // buffer is an AudioBuffer
     });
 }
- 
+
 function download(theblob) {
   Recorder.download(theblob, 'audio.wav'); // downloads a .wav file
 }
@@ -59,24 +59,24 @@ var headers = {
 var data = "";
 var dataAsArray = [];
 
-var mediaDevices; 
-var mediaRecorder; 
+var mediaDevices;
+var mediaRecorder;
 var blobs;
-var chunks = []; 
+var chunks = [];
 var options = {
-  audioBitsPerSecond: 16000, 
-} 
+  audioBitsPerSecond: 16000,
+}
 
 var constraints = {
   audio: {
-    channelCount: 1, 
+    channelCount: 1,
     sampleRate: 16000
   },
-  video: false, 
+  video: false,
 };
 
 //console.log('m',mediaDevices);
-class App2 extends React.Component {
+class IDE extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -91,15 +91,15 @@ class App2 extends React.Component {
       isRecording: true
     });
 
-    var mediaDevices = navigator.mediaDevices; 
+    var mediaDevices = navigator.mediaDevices;
     mediaDevices.getUserMedia(constraints).then(function(stream) {
       mediaRecorder = new MediaRecorder(stream);
       mediaRecorder.ondataavailable = function(e) {
         chunks.push(e.data);
       }
-      
+
       console.log('mediaRecorder', mediaRecorder.state)
-      
+
       mediaRecorder.start();
       console.log('mediaRecorder', mediaRecorder.state)
       console.log(mediaRecorder.state);
@@ -113,13 +113,13 @@ class App2 extends React.Component {
     console.log('mediaRecorder', mediaRecorder.state)
 
     mediaRecorder.onstop = function(e) {
-    
+
       console.log('recording stopped');
       console.log('recording stopped', e.data);
       var theBlob = new Blob(chunks, {
         'type': 'audio/ogg; codecs=opus'
       });
-    
+
       const config = {
         headers: { 'content-type': 'multipart/form-data' }
       }
@@ -132,7 +132,7 @@ class App2 extends React.Component {
     }
 
     mediaRecorder.stop();
-    
+
     this.setState({
       record: false,
       isRecording: false
@@ -148,10 +148,10 @@ class App2 extends React.Component {
     var str = "";
     dataAsArray.forEach(element => {
       str += element + "\n";
-    }); 
+    });
     return str;
   }
-  
+
   render() {
     return (
       <div>
@@ -195,4 +195,4 @@ class App2 extends React.Component {
     )
   }
 }
-export default App2
+export default IDE

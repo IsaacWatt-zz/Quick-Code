@@ -1,14 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import './styles/index.css';
 import App from './App';
 import App2 from './App2';
 import * as serviceWorker from './serviceWorker';
 import { Router, Route, IndexRoute } from 'react-router';
-import './components/text.css';
+import './styles/text.css';
 
 import axios from 'axios';
-
 
 let isLoggedIn = false;
 

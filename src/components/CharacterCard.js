@@ -4,11 +4,11 @@ import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 
-import isaac from'./isaac.png';
-import amir from'./amir.png';
-import iyad from'./iyad.png';
-import kris from'./kris.jpg';
-import logo from'./logo.png';
+import isaac from '../../public/isaac.jpg';
+import amir from'../../public/amir.png';
+import iyad from'../../public/iyad.png';
+import kris from'../../public/kris.jpg';
+import logo from'../../public/logo.png';
 
 import './text.css'
 
