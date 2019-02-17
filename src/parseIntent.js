@@ -9,6 +9,14 @@ function embedObject(template, obj) {
   return func(...keys.map(k => obj[k]));
 }
 
+function getEntitiyData(entities, field) {
+  let returnField = "";
+  entities.forEach(function(el) {
+    returnField = (el.type == field) ? el.entity : returnField;
+  });
+  return returnField;
+}
+
 //
 // Possible Pseudo commands below:
 //
@@ -41,31 +49,92 @@ let while_loop =
   "}" ];
 
 /* misc */
-let comment = ["/* ${comment} */"];
-let goto = "";
+let comment = ["/* ${body} */"];
 
 export default function (LUIS_json, dataObj) {
-    let theIntent = LUIS_json.topScoringIntent;
-    let entities = LUIS_json.entities;
-
+    let theIntent = LUIS_json.topScoringIntent; // for_loop, if_statement, ... 
+    let entities = LUIS_json.entities; // array of json used to fill body -> interested in entitiy and type
+    
     let dataArr = dataObj.dataArr;
     let position = dataObj.currPosition; // where to insert code
 
     let makeCode = []; // code array needs to be inserted after dataArr[position] and
                        // dataArr must be flattened
-
+    
     switch(theintent) {
       case "define_function":
+        define_function.forEach(function(el) {
+          makeCode.push(embedObject(el, {name : getEntitiyData(entities, "name") })); 
+        });
         break;
+
       case "define_variable":
-        // code block
+        define_variable.forEach(function(el) {
+          makeCode.push(embedObject(el, {
+            name : getEntitiyData(entities, "name"), 
+            value: getEntitiyData(entities, "value")
+          })); 
+        });
         break;
+
+        case "if_statement":
+          if_statement.forEach(function(el) {
+            makeCode.push(embedObject(el, {
+              condition : getEntitiyData(entities, "condition"), 
+              body: getEntitiyData(entities, "body")
+            })); 
+          });
+          break;
+
+        case "else_statement":
+          if_statement.forEach(function(el) {
+            makeCode.push(embedObject(el, {
+              body: getEntitiyData(entities, "body")
+            })); 
+          });
+          break;
+
+        case "for_loop":
+          if_statement.forEach(function(el) {
+            makeCode.push(embedObject(el, {
+              initial_statement: getEntitiyData(entities, "initial_statement"), 
+              loop_condition: getEntitiyData(entities, "loop_condition"), 
+              update_statement: getEntitiyData(entities, "update_statement"), 
+              body: getEntitiyData(entities, "body")
+            })); 
+          });
+          break;
+          
+        case "while_loop":
+          if_statement.forEach(function(el) {
+            makeCode.push(embedObject(el, {
+              condition: getEntitiyData(entities, "condition"), 
+              comment: getEntitiyData(entities, "body")
+            })); 
+          });
+          break;
+
+        case "comment":
+          comment.forEach(function(el) {
+            makeCode.push(embedObject(el, {
+              body: getEntitiyData(entities, "body")
+            })); 
+          });
+          break;
       default:
-        // code block
+        // goto case
+        position = getEntitiyData(entities, "body");
+        return {
+          dataArr: dataArr,
+          currPosition: position
+        }
     }
 
+    // currently makeCode contains the code we want to insert. 
+    // We want to now insert it at the right position of the array 
+    // that position is at exactly currPosition
     return {
-      dataArr: ["var x;"],
-      currPosition: dataArr.length
+      dataArr: oldData.splice.apply(oldData, [position, 0].concat(makeCode)),
+      currPosition: position + makeCode.length
     }
 }
