@@ -31,21 +31,21 @@ let define_variable = ["var ${name} = ${value};"];
 /* control flow */
 let if_statement =
   ["if (${condition}) {",
-    "${body}",
+    "\t ${body}",
   "}"];
 let else_statement =
   ["else {",
-    "${body}",
+    "\t ${body}",
   "}"];
 
 /* loops */
 let for_loop =
   ["for (let i = ${initial_statement}, i < ${loop_condition}, i${update_statement} ) {",
-      "${body}",
+      "\t ${body}",
     "}" ];
 let while_loop =
   ["while (${condition}) {",
-    "${body}",
+    "\t ${body}",
   "}" ];
 
 /* misc */
@@ -54,14 +54,13 @@ let comment = ["/* ${body} */"];
 export default function (LUIS_json, dataObj) {
     let theIntent = LUIS_json.topScoringIntent; // for_loop, if_statement, ... 
     let entities = LUIS_json.entities; // array of json used to fill body -> interested in entitiy and type
-    
-    let dataArr = dataObj.dataArr;
-    let position = dataObj.currPosition; // where to insert code
+
+    let dataArr = dataObj.arrayData;
+    let position = dataObj.position; // where to insert code
 
     let makeCode = []; // code array needs to be inserted after dataArr[position] and
                        // dataArr must be flattened
-    
-    switch(theintent) {
+    switch(theIntent) {
       case "define_function":
         define_function.forEach(function(el) {
           makeCode.push(embedObject(el, {name : getEntitiyData(entities, "name") })); 
@@ -87,7 +86,7 @@ export default function (LUIS_json, dataObj) {
           break;
 
         case "else_statement":
-          if_statement.forEach(function(el) {
+          else_statement.forEach(function(el) {
             makeCode.push(embedObject(el, {
               body: getEntitiyData(entities, "body")
             })); 
@@ -95,7 +94,7 @@ export default function (LUIS_json, dataObj) {
           break;
 
         case "for_loop":
-          if_statement.forEach(function(el) {
+          for_loop.forEach(function(el) {
             makeCode.push(embedObject(el, {
               initial_statement: getEntitiyData(entities, "initial_statement"), 
               loop_condition: getEntitiyData(entities, "loop_condition"), 
@@ -106,7 +105,7 @@ export default function (LUIS_json, dataObj) {
           break;
           
         case "while_loop":
-          if_statement.forEach(function(el) {
+          while_loop.forEach(function(el) {
             makeCode.push(embedObject(el, {
               condition: getEntitiyData(entities, "condition"), 
               comment: getEntitiyData(entities, "body")
@@ -126,15 +125,18 @@ export default function (LUIS_json, dataObj) {
         position = getEntitiyData(entities, "body");
         return {
           dataArr: dataArr,
-          currPosition: position
+          currPosition: Number(position)
         }
     }
 
-    // currently makeCode contains the code we want to insert. 
-    // We want to now insert it at the right position of the array 
-    // that position is at exactly currPosition
+    // 
+    // want to put makeCode at position ${position} of dataArr
+    //
+
+    let finalArr = dataArr.length == 0 ? makeCode : finalArr.splice(position, 0, ...makeCode);;
+
     return {
-      dataArr: oldData.splice.apply(oldData, [position, 0].concat(makeCode)),
-      currPosition: position + makeCode.length
+      arrayData: finalArr,
+      position: position + makeCode.length
     }
 }

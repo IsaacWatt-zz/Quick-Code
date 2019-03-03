@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './styles/index.css';
 import App from './App';
-import App2 from './App2';
+import IDE from './IDE';
 import * as serviceWorker from './serviceWorker';
 import { Router, Route, IndexRoute } from 'react-router';
 import './styles/text.css';

@@ -8,8 +8,7 @@ import Embed from 'runkit-embed-react';
 //import Code from "./components/Code";
 import { ReactMic, saveRecording } from "react-mic";
 
-import './components/text.css';
-import audioFile from './audio.wav'
+//import './components/text.css';
 
 import Recorder from 'recorder-js';
 import parseIntent from './parseIntent.js';
@@ -57,7 +56,10 @@ var headers = {
     'Access-Control-Allow-Headers': 'Content-Type',
 }
 var data = "";
-var dataAsArray = [];
+var dataObj = {
+  arrayData: [], 
+  position: 0
+};
 
 var mediaDevices;
 var mediaRecorder;
@@ -107,10 +109,12 @@ class IDE extends React.Component {
     });
   };
 
+
+
   stopRecording = () => {
     var myApp = this;
     var theIntent = {};
-    console.log('mediaRecorder', mediaRecorder.state)
+    console.log('mediaRecorder', mediaRecorder.state);
 
     mediaRecorder.onstop = function(e) {
 
@@ -123,11 +127,21 @@ class IDE extends React.Component {
       const config = {
         headers: { 'content-type': 'multipart/form-data' }
       }
-      axios.post('https://cognitivecodeapp.azurewebsites.net/speachToText/v1.0/toCode', {data: theBlob}, config).then((res) => {
-        console.log('res', res);
+    axios.post('https://cognitivecodeapp.azurewebsites.net/speachToText/v1.0/toCode', {data: theBlob}, config).then((res) => {
+
         theIntent = res;
+
+        dataObj = parseIntent(theIntent, dataObj);
+        
+        data = "";
+        dataObj.arrayData.forEach(element => {
+          data += element + "\n";
+        });
+
+        myApp.forceUpdate();
+      
       }).catch((error) => {
-        console.log('error');
+        console.log(error)
       })
     }
 
@@ -138,19 +152,10 @@ class IDE extends React.Component {
       isRecording: false
     });
 
-    dataAsArray = parseIntent(theIntent, dataAsArray);
-    data = this.dataAsString(dataAsArray);
+    
   };
 
   onSave = blobObject => {};
-
-  dataAsString(dataAsArray) {
-    var str = "";
-    dataAsArray.forEach(element => {
-      str += element + "\n";
-    });
-    return str;
-  }
 
   render() {
     return (

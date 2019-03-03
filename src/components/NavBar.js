@@ -10,7 +10,7 @@ import IconButton from "@material-ui/core/IconButton";
 
 import ReactDOM from 'react-dom';
 import App from '../App';
-import App2 from '../App2';
+import IDE from '../IDE';
 import { Router, Route, IndexRoute } from 'react-router';
 
 const styles = {
@@ -35,7 +35,7 @@ const styles = {
 
     function isLoggedIn() {
       isLoggedIn = true;
-      ReactDOM.render(<App2 />, document.getElementById('root2'));
+      ReactDOM.render(<IDE />, document.getElementById('root2'));
       document.getElementById('root').remove();
       document.getElementById('speakBtn').remove();
       //document.querySelector('.runkit-notebook-container').style.visibility = "visible";
